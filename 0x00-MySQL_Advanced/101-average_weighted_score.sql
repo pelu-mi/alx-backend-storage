@@ -2,7 +2,7 @@
 -- Stored procedure that computes and store the average weighted score for all students
 DROP PROCEDURE IF EXISTS ComputeAverageWeightedScoreForUsers;
 DELIMITER $$
-CREATE PROCEDURE ComputeAverageWeightedScoreForUsers
+CREATE PROCEDURE ComputeAverageWeightedScoreForUsers ()
 -- Edit Procedure body below
 BEGIN
 	UPDATE users AS U,
