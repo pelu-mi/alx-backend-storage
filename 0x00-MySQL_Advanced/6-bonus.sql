@@ -2,7 +2,7 @@
 -- Stored procedure that computes and store the average score for a student
 DROP PROCEDURE IF EXISTS AddBonus;
 DELIMITER $$
-CREATE PROCEDURE AddBonus (IN user_id INT, INOUT project_name VARCHAR(255), IN score INT)
+CREATE PROCEDURE AddBonus (IN user_id INT, IN project_name VARCHAR(255), IN score INT)
 -- Edit Procedure body below
 BEGIN
 	DECLARE proj_id INT DEFAULT 0;
