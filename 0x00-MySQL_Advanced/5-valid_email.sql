@@ -4,7 +4,7 @@
 DROP TRIGGER IF EXISTS valid_email_reset;
 DELIMITER $$
 CREATE TRIGGER valid_email_reset
-AFTER UPDATE ON users
+BEFORE UPDATE ON users
 FOR EACH ROW
 -- Edit Trigger body below
 BEGIN
