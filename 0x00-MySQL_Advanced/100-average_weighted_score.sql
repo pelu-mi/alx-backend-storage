@@ -8,8 +8,13 @@ BEGIN
 	DECLARE total_score INT DEFAULT 0;
 	DECLARE total_weight INT DEFAULT 0;
 
-	SELECT SUM(corrections.score * projects.weight) INTO total_score,
-	SUM(projects.weight) INTO total_weight
+	SELECT SUM(corrections.score * projects.weight) INTO total_score
+	FROM corrections
+        INNER JOIN projects
+        ON corrections.project_id = projects.id
+        WHERE corrections.user_id = user_id;
+	
+	SELECT SUM(projects.weight) INTO total_weight
 	FROM corrections
 	INNER JOIN projects
 	ON corrections.project_id = projects.id
