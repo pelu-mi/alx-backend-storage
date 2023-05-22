@@ -5,7 +5,7 @@ DELIMITER $$
 CREATE PROCEDURE ComputeAverageWeightedScoreForUsers (IN user_id INT)
 -- Edit Procedure body below
 BEGIN
-	DECLARE total_score FLOAT DEFAULT 0.0;
+	DECLARE total_score INT DEFAULT 0;
 	DECLARE total_weight INT DEFAULT 0;
 
 	SELECT SUM(corrections.score * projects.weight) INTO total_score,
