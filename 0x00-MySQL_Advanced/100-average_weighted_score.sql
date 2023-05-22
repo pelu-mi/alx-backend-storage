@@ -1,8 +1,8 @@
 -- Task 12 for MySQL Advanced
 -- Stored procedure that computes and store the average weighted score for a student
-DROP PROCEDURE IF EXISTS ComputeAverageWeightedScoreForUsers;
+DROP PROCEDURE IF EXISTS ComputeAverageScoreForUser;
 DELIMITER $$
-CREATE PROCEDURE ComputeAverageWeightedScoreForUsers (IN user_id INT)
+CREATE PROCEDURE ComputeAverageScoreForUser (IN user_id INT)
 -- Edit Procedure body below
 BEGIN
 	DECLARE total_score INT DEFAULT 0;
