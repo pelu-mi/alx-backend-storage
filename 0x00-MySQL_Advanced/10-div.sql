@@ -6,10 +6,10 @@ CREATE FUNCTION SafeDiv (a INT, b INT)
 RETURNS FLOAT DETERMINISTIC
 -- Edit Function body below
 BEGIN
-	DECLARE div FLOAT DEFAULT 0.0;
+	DECLARE c FLOAT DEFAULT 0;
 	IF b != 0 THEN
-		SET div = a / b;
+		SET c = a / b;
 	END IF;
-	RETURN div;
+	RETURN c;
 END $$
 DELIMITER ;
