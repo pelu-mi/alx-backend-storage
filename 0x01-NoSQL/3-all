@@ -1,2 +1,2 @@
-// Mongodb: Create collection and insert record
+// Mongodb: Basic commands
 db.school.find()
