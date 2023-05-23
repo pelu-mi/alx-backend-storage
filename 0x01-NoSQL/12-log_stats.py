@@ -2,11 +2,11 @@
 """ Python module using mongodb
 """
 
-import pymongo
+from pymongo import MongoClient
 
 
 def print_nginx_log_stats(mongo_collection):
-    """ Return list of school having a specific topic
+    """ Provides some stats from nginx logs
     """
     print("{} logs".format(mongo_collection.count_documents({})))
     print("Methods:")
@@ -17,6 +17,7 @@ def print_nginx_log_stats(mongo_collection):
     stats_check_count = mongo_collection.count_documents({
                         "method": "GET", "path": "/status"})
     print("{} status check".format(stats_check_count))
+
 
 if __name__ == "__main__":
     mongo_collection = MongoClient('mongodb://127.0.0.1:27017').logs.nginx
