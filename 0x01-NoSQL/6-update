@@ -1,2 +1,2 @@
 // Mongodb: Basic commands
-db.school.updateMany({name: "Holberton school"}, { $set: { address: "972 Mission street" } })
+db.school.updateMany({name: "Holberton school"}, {$set: { address: "972 Mission street" }})
