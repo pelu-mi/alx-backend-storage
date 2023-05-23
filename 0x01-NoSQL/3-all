@@ -1,2 +1,2 @@
 // Mongodb: Create collection and insert record
-db.school.insert({name: 'Holberton school'})
+db.school.find()
