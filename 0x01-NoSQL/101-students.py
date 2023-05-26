@@ -15,7 +15,7 @@ def top_students(mongo_collection):
                 "name": 1,
                 "averageScore": {
                     "$avg": {
-                        "$avg": "topics.score"
+                        "$avg": "$topics.score"
                     }
                 },
                 "topics": 1
