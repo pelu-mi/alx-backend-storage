@@ -2,41 +2,19 @@
 """ Module contaning simple redis cache
 """
 
-import requests
 import redis
-from functools import wraps
-cache = redis.Redis()
+import requests
+rc = redis.Redis()
+count = 0
 
 
-def url_access_count(method):
-    """ Decorator for get_page
-    """
-    @wraps(method)
-    def for_each_call(url):
-        """ Wrapper function
-        """
-        key = "cached:" + url
-        cached_value = cache.get(key)
-        if cached_value:
-            return cached_value.decode("utf-8")
-
-        # Update cache with new content
-        key_count = "count:" + url
-        html_content = method(url)
-
-        cache.incr(key_count)
-        cache.set(key, html_content, ex=10)
-        cache.expire(key, 10)
-        return html_content
-    return for_each_call
-
-
-@url_access_count
 def get_page(url: str) -> str:
-    """ Get the content of a page
-    """
-    results = requests.get(url)
-    return results.text
+    """ get a page and cach value"""
+    rc.set(f"cached:{url}", count)
+    resp = requests.get(url)
+    rc.incr(f"count:{url}")
+    rc.setex(f"cached:{url}", 10, rc.get(f"cached:{url}"))
+    return resp.text
 
 
 if __name__ == "__main__":
