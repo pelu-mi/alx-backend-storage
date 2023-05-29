@@ -9,7 +9,8 @@ import redis
 
 
 def count_calls(method: Callable) -> Callable:
-    """ Decorator for class Cache
+    """ Decorator for Cache.store
+        Count the number of calls for this method
     """
     @wraps(method)
     def for_each_call(self, *args, **kwargs):
@@ -18,6 +19,23 @@ def count_calls(method: Callable) -> Callable:
         key = method.__qualname__
         self._redis.incr(key)
         return method(self, *args, **kwargs)
+
+    return for_each_call
+
+def call_history(method: Callable) -> Callable:
+    """ Decorator for Cache.store
+        Store input and output params for Cache.store in redis
+    """
+    @wraps(method)
+    def for_each_call(self, *args, **kwargs):
+        """ Wrapped function for the decorator
+        """
+        key_input = method.__qualname__ + ":inputs"
+        key_output = method.__qualname__ + ":outputs"
+        self._redis.rpush(key_input, str(args))
+        output: Any = method(self, *args, **kwargs)
+        self._redis.rpush(key_output, str(output))
+        return output
 
     return for_each_call
 
@@ -30,6 +48,7 @@ class Cache:
         self._redis.flushdb()
 
     @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ Store data in the redis db
         """
