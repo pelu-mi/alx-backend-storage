@@ -2,7 +2,7 @@
 """ Module contaning simple tasks for redis project
 """
 
-from typing import Any
+from typing import Any, Union
 import uuid
 import redis
 
@@ -14,7 +14,7 @@ class Cache:
         self._redis: Any = redis.Redis()
         self._redis.flushdb()
 
-    def store(self, data: Any) -> str:
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """ Store data in the redis db
         """
         key: uuid.UUID = uuid.uuid4()
