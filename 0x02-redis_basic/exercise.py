@@ -3,10 +3,25 @@
 """
 
 from typing import Any, Union, Callable
+from functools import wraps
 import uuid
 import redis
 
 
+def count_calls(method: Callable) -> Callable:
+    """ Decorator for class Cache
+    """
+    @wraps(method)
+    def for_each_call(self, *args, **kwargs):
+        """ Wrapped function for the decorator
+        """
+        key = method.__qualname__
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+
+    return for_each_call
+
+@count_calls
 class Cache:
     def __init__(self) -> None:
         """ Initialize the Cache class
@@ -21,7 +36,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable[[Any], Any] = None):
+    def get(self, key: str, fn: Callable[[Any], Any] = None) -> Any:
         """ Get item from db and call fn to convert it from byte to datatype
         """
         value: bytes = self._redis.get(key)
