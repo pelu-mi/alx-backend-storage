@@ -56,6 +56,8 @@ def replay(method: Callable) -> Callable:
 
 
 class Cache:
+    """ Class Cache containing instance of redis cache
+    """
     def __init__(self) -> None:
         """ Initialize the Cache class with an instance of redis
         """
@@ -65,7 +67,7 @@ class Cache:
     @count_calls
     @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
-        """ Store data in the redis cache 
+        """ Store data in the redis cache
         """
         key: str = str(uuid.uuid4())
         self._redis.set(key, data)
