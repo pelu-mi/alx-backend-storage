@@ -18,5 +18,5 @@ class Cache:
         """ Store data in the redis db
         """
         key: uuid.UUID = uuid.uuid4()
-        self._redis.set(key, data)
+        self._redis.set(str(key), data)
         return str(key)
