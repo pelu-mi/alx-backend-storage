@@ -22,6 +22,7 @@ def count_calls(method: Callable) -> Callable:
 
     return for_each_call
 
+
 def call_history(method: Callable) -> Callable:
     """ Decorator for Cache.store
         Store input and output params for Cache.store in redis
@@ -38,6 +39,20 @@ def call_history(method: Callable) -> Callable:
         return output
 
     return for_each_call
+
+
+def replay(method: Callable) -> Callable:
+    """ Display history of calls of a function
+    """
+    name = method.__qualname__
+    cache = redis.Redis()
+    calls = cache.get(name).decode("utf-8")
+    print("{} was called {} times:".format(name, calls))
+    inputs = cache.lrange(name + ":inputs", 0, -1)
+    ouputs = cache.lrange(name + ":outputs", 0, -1)
+    for i, o in zip(inputs, outputs):
+        print("{}(*{}) -> {}".format(name, i.decode("utf-8"),
+              o.decode("utf-8")))
 
 
 class Cache:
