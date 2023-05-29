@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+""" Module contaning simple tasks for redis project
+"""
+
+from typing import Any
+import uuid
+import redis
+
+
+class Cache:
+    def __init__(self) -> None:
+        """ Initialize the Cache class
+        """
+        self._redis: Any = redis.Redis()
+        self._redis.flushdb()
+
+    def store(self, data: Any) -> str:
+        """ Store data in the redis db
+        """
+        key: uuid.UUID = uuid.uuid4()
+        self._redis.set(key, data)
+        return str(key)
