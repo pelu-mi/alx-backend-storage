@@ -21,11 +21,21 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable[[Any], Any]):
+    def get(self, key: str, fn: Callable[[Any], Any] = None):
         """ Get item from db and call fn to convert it from byte to datatype
         """
-        # if self._redis.exists(key):
         value: bytes = self._redis.get(key)
-        return fn(value)
-        #else:
-        #    self._redis.get(key)
+        if fn:
+            return fn(value)
+        else:
+            return value
+
+    def get_str(self, key: str) -> str:
+        """ Call get function with string class
+        """
+        return self.get(key, str)
+
+    def get_int(self, key: str) -> int:
+        """ Call get function with int class
+        """
+        return self.get(key, int)
