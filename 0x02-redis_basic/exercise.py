@@ -21,7 +21,7 @@ def count_calls(method: Callable) -> Callable:
 
     return for_each_call
 
-@count_calls
+
 class Cache:
     def __init__(self) -> None:
         """ Initialize the Cache class
@@ -29,6 +29,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ Store data in the redis db
         """
